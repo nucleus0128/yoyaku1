@@ -1,41 +1,43 @@
-   $ （関数 （） {
-    //カレンダー
-    $ （関数 （） {
-        $ （'input [name = "date00"]' ）。デートピッカー（{
-            dateFormat：'yy / mm / dd' 、
-        } ）;
-    } ）;
+     $(function () {
+    // カレンダー
+    $(function () {
+        $('input[name="date00"]').datepicker({
+            dateFormat: 'yy/mm/dd',
+        });
+    });
 
-    -
-    $ （'＃form-number' ）。クリック（関数 （） {
-        $ （'＃form-name' ）。空（）;
-        var  num  =  $ （'input [name = "number"]：checked' ）。val （）;
-        for  （i  =  0 ;  i  <  num ;  i ++ ） {
-            $ （'＃form-name' ）。追加（
-                `<input class =" form-control w-100 mt-1 "name =" text "maxlength =" 10 ">`
-            ）;
+    // 参加人数分の氏名欄を生成
+    $('#form-number').click(function () {
+        $('#form-name').empty();
+        var num = $('input[name="number"]:checked').val();
+        for (i = 0; i < num; i++) {
+            $('#form-name').append(
+                `<input class="form-control w-100 mt-1" name="text" maxlength="10">`
+            );
         }
-    } ）;
+    });
 
-    //この
-    $ （'フォーム' ）。送信（関数 （） {
-        var  date01  =  $ （'input [name = "date01"]' ）。val （）;
-        var  time01  =  $ （'input [name = "time01"]' ）。val （）;
-        var  date02  =  $ （'input [name = "date02"]' ）。val （）;
-        var  time02  =  $ （'input [name = "time02"]' ）。val （）;
-        var  date03  =  $ （'input [name = "date03"]' ）。val （）;
-        var  time03  =  $ （'input [name = "time03"]' ）。val （）;
-        var  number  =  $ （'input [name = "number"]：checked' ）。val （）;
-        var  names  =  '' ;
-        var  tel  =  $ （'input [name = "tel"]' ）。val （）;
-        $ （'＃form-name' ）。子供（）。each （function  （i 、 elm ） {
-            名前 + =  $ （elm ）。val （） +  '、' ;
-        } ）
-        名前 = 名前。スライス（0 、 -1 ）; _
+    // 送信
+    $('form').submit(function () {
+        var date01 = $('input[name="date01"]').val();
+        var time01 = $('input[name="time01"]').val();
+        var date02 = $('input[name="date02"]').val();
+        var time02 = $('input[name="time02"]').val();
+        var date03 = $('input[name="date03"]').val();
+        var time03 = $('input[name="time03"]').val();
+        var number = $('input[name="number"]:checked').val();
+        var names = '';
+        var address = $('input[name="address"]').val();
+        var tel = $('input[name="tel"]').val();
+        var text = $('input[name="text"]').val();
+        $('#form-name').children().each(function (i, elm) {
+            names += $(elm).val() + '、';
+        })
+        names = names.slice(0, -1);
 
-        var  msg  =  `・第一希望日：$ { date01 } \ n希望時間：$ { time01 } \ n・第二希望日：$ { date02 } \ n希望時間：$ { time02 } \ n・第三日：$ { date03 } \ n希望時間：$ { time03 } \ nデータベース：$ {番号} \ n氏名： $ {名前} \ n住所：$ {アドレス} \ n電話番号：$ { tel } ` ;
-        sendText （msg ）;
+        var msg = `・第一希望日：${date01}\n希望時間：${time01}\n・第二希望日：${date02}\n希望時間：${time02}\n・第三希望日：${date03}\n希望時間：${time03}\n人数：${number}\n氏名：${names}\n住所：${address}\n電話番号：${tel}\n備考：${text}`;
+        sendText(msg);
 
-         falseを返します;
-    } ）;
-} ）;
+        return false;
+    });
+});
